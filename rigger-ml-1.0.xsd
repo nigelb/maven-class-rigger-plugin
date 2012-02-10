@@ -1,107 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<xs:schema version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+<xs:schema version="1.0" targetNamespace="http://nigelb.github.com/maven-class-rigger-plugin/rigger-ml-1.0.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema">
 
-  <xs:element name="addAnnotation" type="addAnnotation"/>
+  <xs:import schemaLocation="schema2.xsd"/>
 
-  <xs:element name="annotationList" type="annotationList"/>
+  <xs:element name="JuryRigger" type="riggerML"/>
 
-  <xs:element name="annotator" type="annotator"/>
+  <xs:element name="matches" type="match"/>
 
-  <xs:element name="fieldFinder" type="fieldFinder"/>
-
-  <xs:element name="match" type="match"/>
-
-  <xs:element name="methodFinder" type="methodFinder"/>
-
-  <xs:element name="nameMatcher" type="nameMatcher"/>
-
-  <xs:element name="rigger" type="rigger"/>
-
-  <xs:element name="riggerML">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element name="matches" type="match" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-
-  <xs:complexType name="methodFinder">
-    <xs:complexContent>
-      <xs:extension base="finder">
-        <xs:sequence>
-          <xs:element name="methods" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="finder" abstract="true">
-    <xs:sequence/>
-  </xs:complexType>
-
-  <xs:complexType name="annotator" abstract="true">
-    <xs:sequence/>
-  </xs:complexType>
-
-  <xs:complexType name="fieldFinder">
-    <xs:complexContent>
-      <xs:extension base="finder">
-        <xs:sequence>
-          <xs:element name="fields" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="pair">
-    <xs:sequence>
-      <xs:element name="a" type="xs:anyType" minOccurs="0"/>
-      <xs:element name="b" type="xs:anyType" minOccurs="0"/>
-    </xs:sequence>
-  </xs:complexType>
-
-  <xs:complexType name="match" abstract="true">
-    <xs:complexContent>
-      <xs:extension base="rigger">
-        <xs:sequence/>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="rigger" abstract="true">
-    <xs:sequence/>
-  </xs:complexType>
-
-  <xs:complexType name="addAnnotation">
-    <xs:complexContent>
-      <xs:extension base="rigger">
-        <xs:sequence>
-          <xs:element name="finder" type="annotationList" minOccurs="0" maxOccurs="unbounded"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="annotationList">
-    <xs:sequence>
-      <xs:element name="annotations" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
-      <xs:element name="finder" type="finder" minOccurs="0"/>
-    </xs:sequence>
-  </xs:complexType>
-
-  <xs:complexType name="nameMatcher">
-    <xs:complexContent>
-      <xs:extension base="match">
-        <xs:sequence>
-          <xs:element name="classMatch" type="xs:string" minOccurs="0"/>
-          <xs:element ref="rigger" minOccurs="0" maxOccurs="unbounded"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="log" abstract="true">
-    <xs:sequence/>
-  </xs:complexType>
 </xs:schema>
 

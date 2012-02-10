@@ -77,7 +77,27 @@
     </div>
     <div id="bodyColumn">
       <div id="contentBox">
-        
+        <div class="section"><h2>Class Rigger Configeration File<a name="Class_Rigger_Configeration_File"></a></h2><p>The default location that this plugin looks for its config file is: ${project.basedir}/src/main/rigger/config.xml</p></div><div class="section"><h2>Sample RiggerML File<a name="Sample_RiggerML_File"></a></h2><p>The following sample runs as follows:</p><ul><li>Finds all classes whose fully qualified name begins with org.example<ul><li>Finds any fields of this class named &quot;field&quot;<ul><li>Adds the javax.xml.bind.annotation.XmlTransient annotation to it.</li></ul></li><li>Finds all the methods that start with &quot;get&quot;<ul><li>Adds the javax.xml.bind.annotation.XmlTransient annotation to it.</li></ul></li></ul></li></ul><div class="source"><pre>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;yes&quot;?&gt;
+&lt;rig:JuryRigger xmlns:rig=&quot;http://nigelb.github.com/maven-class-rigger-plugin/rigger-ml-1.0.xsd&quot;
+                xmlns:xs=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; &gt;
+    &lt;rig:matches xs:type=&quot;nameMatcher&quot;&gt;
+        &lt;rig:classMatch&gt;org\.example\..*&lt;/rig:classMatch&gt;
+        &lt;rig:rigger xs:type=&quot;addAnnotation&quot;&gt;
+            &lt;rig:finder&gt;
+                &lt;rig:annotations&gt;javax.xml.bind.annotation.XmlTransient&lt;/rig:annotations&gt;
+                &lt;rig:finder xs:type=&quot;fieldFinder&quot;&gt;
+                    &lt;rig:fields&gt;field&lt;/rig:fields&gt;
+                &lt;/rig:finder&gt;
+            &lt;/rig:finder&gt;
+            &lt;rig:finder&gt;
+                &lt;rig:annotations&gt;javax.xml.bind.annotation.XmlTransient&lt;/rig:annotations&gt;
+                &lt;rig:finder xs:type=&quot;methodFinder&quot;&gt;
+                    &lt;rig:methods&gt;get.*&lt;/rig:methods&gt;
+                &lt;/rig:finder&gt;
+            &lt;/rig:finder&gt;
+        &lt;/rig:rigger&gt;
+    &lt;/rig:matches&gt;
+&lt;/rig:JuryRigger&gt;</pre></div></div>
       </div>
     </div>
     <div class="clear">
