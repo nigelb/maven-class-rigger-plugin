@@ -18,6 +18,7 @@
  */
 package rigger.bce;
 
+import com.sun.xml.bind.marshaller.NamespacePrefixMapper;
 import org.apache.bcel.classfile.JavaClass;
 import org.apache.bcel.generic.ClassGen;
 import rigger.Log;
@@ -26,16 +27,18 @@ import rigger.Log;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 import java.util.ArrayList;
 import java.util.List;
 
-@XmlType(name = "", propOrder = {"matches"})
-@XmlRootElement
+@XmlType(propOrder = {"matches"})
+@XmlRootElement(name = "JuryRigger", namespace = "http://nigelb.github.com/maven-class-rigger-plugin/rigger-ml-1.0.xsd")
 public class RiggerML {
     private List<Match> matches = new ArrayList<Match>();
 
+    @XmlElement(namespace = "http://nigelb.github.com/maven-class-rigger-plugin/rigger-ml-1.0.xsd")
     public List<Match> getMatches() {
         return matches;
     }
@@ -62,7 +65,7 @@ public class RiggerML {
         RiggerML rml = new RiggerML();
         NameMatcher nm;
         rml.getMatches().add(nm = new NameMatcher());
-        nm.setClassMatch("net\\.opengis\\..*");
+        nm.setClassMatch("org\\.example\\..*");
         AddAnnotation aa;
         nm.getRiggers().add(aa=new AddAnnotation());
 
@@ -70,17 +73,29 @@ public class RiggerML {
         FieldFinder ff = new FieldFinder();
         fa.setFinder(ff);
         aa.getFinder().add(fa);
-        ff.getFields().add("jdoDetachedState");
+        ff.getFields().add("field");
         fa.getAnnotations().add(javax.xml.bind.annotation.XmlTransient.class.getCanonicalName());
 
         AnnotationList ma = new AnnotationList();
         MethodFinder mf = new MethodFinder();
         ma.setFinder(mf);
         aa.getFinder().add(ma);
-        mf.getMethods().add(".*jdo.*");
+        mf.getMethods().add("get.*");
         ma.getAnnotations().add(javax.xml.bind.annotation.XmlTransient.class.getCanonicalName());
 
-
+        mar.setProperty("com.sun.xml.bind.namespacePrefixMapper", new NamespacePrefixMapper(){
+            @Override
+            public String getPreferredPrefix(String s, String s1, boolean b) {
+                if(s.equals("http://www.w3.org/2001/XMLSchema-instance"))
+                {
+                    return "xs";
+                }else if(s.equals("http://nigelb.github.com/maven-class-rigger-plugin/rigger-ml-1.0.xsd"))
+                {
+                    return "rig";
+                }
+                return null;
+            }
+        });
         mar.marshal(rml, System.out);
     }
 

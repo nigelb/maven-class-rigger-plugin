@@ -1,0 +1,44 @@
+Class Rigger Configeration File
+
+    The default location that this plugin looks for its config file is:
+    $\{project.basedir\}/src/main/rigger/config.xml
+
+Sample RiggerML File
+
+    The following sample runs as follows:
+
+    * Finds all classes whose fully qualified name begins with org.example
+
+        * Finds any fields of this class named "field"
+
+            * Adds the javax.xml.bind.annotation.XmlTransient annotation to it.
+
+        * Finds all the methods that start with "get"
+
+            * Adds the javax.xml.bind.annotation.XmlTransient annotation to it.
+
+    []
+
++-----
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<rig:JuryRigger xmlns:rig="http://nigelb.github.com/maven-class-rigger-plugin/rigger-ml-1.0.xsd"
+                xmlns:xs="http://www.w3.org/2001/XMLSchema-instance" >
+    <rig:matches xs:type="nameMatcher">
+        <rig:classMatch>org\.example\..*</rig:classMatch>
+        <rig:rigger xs:type="addAnnotation">
+            <rig:finder>
+                <rig:annotations>javax.xml.bind.annotation.XmlTransient</rig:annotations>
+                <rig:finder xs:type="fieldFinder">
+                    <rig:fields>field</rig:fields>
+                </rig:finder>
+            </rig:finder>
+            <rig:finder>
+                <rig:annotations>javax.xml.bind.annotation.XmlTransient</rig:annotations>
+                <rig:finder xs:type="methodFinder">
+                    <rig:methods>get.*</rig:methods>
+                </rig:finder>
+            </rig:finder>
+        </rig:rigger>
+    </rig:matches>
+</rig:JuryRigger>
++-----
