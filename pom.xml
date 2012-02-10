@@ -28,7 +28,7 @@
     </issueManagement>
     <scm>
         <connection>scm:git:https://github.com/nigelb/maven-class-rigger-plugin.git</connection>
-        <url>https://github.com/nigelb/maven-class-rigger-plugin.git</url>
+        <url>https://github.com/nigelb/maven-class-rigger-plugin</url>
     </scm>
     <reporting>
         <plugins>
@@ -42,7 +42,7 @@
 
     <properties>
         <schemagen>${basedir}/target/generated-resources/schemagen/schema1.xsd</schemagen>
-        <site.schema>${basedir}/src/site/resources/rigger-ml.xsd</site.schema>
+        <site.schema>${basedir}/src/site/resources/rigger-ml-1.0.xsd</site.schema>
     </properties>
 
     <pluginRepositories>
@@ -76,9 +76,60 @@
     <build>
         <plugins>
             <plugin>
+                <groupId>com.github.github</groupId>
+                <artifactId>site-maven-plugin</artifactId>
+                <version>0.4</version>
+                <configuration>
+                    <message>Building site for ${project.version}</message>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>site</goal>
+                        </goals>
+                        <phase>site</phase>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-site-plugin</artifactId>
                 <version>3.0</version>
+                <configuration>
+                    <reportPlugins>
+                        <plugin>
+                            <groupId>org.apache.maven.plugins</groupId>
+                            <artifactId>maven-project-info-reports-plugin</artifactId>
+                            <version>2.4</version>
+                            <configuration>
+                                <dependencyDetailsEnabled>true</dependencyDetailsEnabled>
+                                <dependencyLocationsEnabled>true</dependencyLocationsEnabled>
+                            </configuration>
+                        </plugin>
+                        <plugin>
+                            <groupId>org.apache.maven.plugins</groupId>
+                            <artifactId>maven-plugin-plugin</artifactId>
+                            <version>2.5.1</version>
+                        </plugin>
+                        <plugin>
+                            <groupId>org.apache.maven.plugins</groupId>
+                            <artifactId>maven-javadoc-plugin</artifactId>
+                            <version>2.7</version>
+                        </plugin>
+                        <!--
+                                                <plugin>
+                                                    <groupId>org.apache.maven.plugins</groupId>
+                                                    <artifactId>maven-surefire-report-plugin</artifactId>
+                                                    <version>2.6</version>
+                                                </plugin>
+                                                <plugin>
+                                                    <groupId>org.apache.maven.plugins</groupId>
+                                                    <artifactId>maven-checkstyle-plugin</artifactId>
+                                                    <version>2.6</version>
+                                                </plugin>
+                        -->
+                    </reportPlugins>
+                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
@@ -134,7 +185,8 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
-                    <source>1.5</source>
+                    <source>1.6</source>
+                    <target>1.6</target>
                 </configuration>
             </plugin>
             <plugin>
