@@ -3,7 +3,7 @@ maven-class-rigger-plugin
 =========================
 
 This maven plugin provides the capability of conducting simple class file byte code re-engineering.
-The byte code manipulation is controlled by a [config.xml]((http://nigelb.github.com/maven-class-rigger-plugin/config.html)) file.
+The byte code manipulation is controlled by a [config.xml](http://nigelb.github.com/maven-class-rigger-plugin/config.html) file.
 The default location for this file is ${project.basedir}/src/main/rigger/config.xml.
 
 Usage [See Usage](http://nigelb.github.com/maven-class-rigger-plugin/usage.html):
