@@ -1,0 +1,3 @@
+Introduction
+
+    This maven plugin provides the capability of conducting simple class file byte code re-engineering. The byte code manipulation is controlled by a {{{./config.html}config.xml}} file.
