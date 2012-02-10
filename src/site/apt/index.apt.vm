@@ -1,3 +1,5 @@
 Introduction
 
-    This maven plugin provides the capability of conducting simple class file byte code re-engineering. The byte code manipulation is controlled by a {{{./config.html}config.xml}} file.
+    This maven plugin provides the capability of conducting simple class file byte code re-engineering.
+    The byte code manipulation is controlled by a {{{./config.html}config.xml}} file.
+    This project can be found on GitHhb {{https://github.com/nigelb/maven-class-rigger-plugin}}.
