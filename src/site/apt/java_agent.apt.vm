@@ -1,0 +1,3 @@
+Java Agent
+
+The class {{{./apidocs/index.html?rigger/agent/RiggerAgent.html}RiggerAgent}} implements the  {{{http://docs.oracle.com/javase/6/docs/api/index.html?java/lang/instrument/ClassFileTransformer.html}ClassFileTransformer}} interface {{{http://docs.oracle.com/javase/6/docs/api/index.html?java/lang/instrument/package-summary.html}java.lang.instrument}}
