@@ -65,7 +65,7 @@ public class RiggerAgent implements ClassFileTransformer {
                     System.out.printf("[RiggerAgent] %s%n", message);
                 }
             });
-            return jc.getBytes();
+            return cg.getJavaClass().getBytes();
         } catch (IOException e) {
 
         }
