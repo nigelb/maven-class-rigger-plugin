@@ -25,6 +25,9 @@ import org.apache.bcel.generic.ConstantPoolGen;
 import org.apache.bcel.generic.FieldGenOrMethodGen;
 import rigger.Log;
 
+import javax.xml.bind.annotation.XmlSeeAlso;
+
+@XmlSeeAlso({FieldFinder.class, MethodFinder.class})
 public abstract class Finder {
     public abstract Pair<FieldGenOrMethodGen, FieldOrMethod>[] find(JavaClass jc, ConstantPoolGen cpg, Log logger);
 
