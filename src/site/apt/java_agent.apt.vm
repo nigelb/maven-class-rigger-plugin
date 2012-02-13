@@ -1,3 +1,84 @@
 Java Agent
 
-The class {{{./apidocs/index.html?rigger/agent/RiggerAgent.html}RiggerAgent}} implements the  {{{http://docs.oracle.com/javase/6/docs/api/index.html?java/lang/instrument/ClassFileTransformer.html}ClassFileTransformer}} interface {{{http://docs.oracle.com/javase/6/docs/api/index.html?java/lang/instrument/package-summary.html}java.lang.instrument}}
+    The class {{{./apidocs/index.html?rigger/agent/RiggerAgent.html}rigger.agent.RiggerAgent}} implements the  {{{http://docs.oracle.com/javase/6/docs/api/index.html?java/lang/instrument/ClassFileTransformer.html}ClassFileTransformer}} interface {{{http://docs.oracle.com/javase/6/docs/api/index.html?java/lang/instrument/package-summary.html}java.lang.instrument}} as well.
+
+    This means that it can be used in conjunction with the -javaagent commandline flag to enable the byte code engineering at run-time.
+
+    The class {{{https://github.com/nigelb/maven-class-rigger-plugin/blob/master/src/main/java/rigger/demo/Example.java}rigger.demo.Example}} has been created to provide an example of this:
+
+Preparation
+
++---
+    # maven-class-rigger-plugin.git> mvn package
+    # maven-class-rigger-plugin.git> mvn dependency:copy-dependencies -DoutputDirectory=target/deps
++---
+
+Normal Operation
+
++---
+    # maven-class-rigger-plugin.git> java -classpath target/maven-class-rigger-plugin-0.0.1-SNAPSHOT.jar:target/deps/* rigger.demo.Example
+
+Annotations of the rigger.demo.Example class:
+
+Annotations on the rigger.demo.Example's Fields:
+    private java.lang.Object rigger.demo.Example.field
+
+
+Annotations on the rigger.demo.Example's Methods:
+    public static void rigger.demo.Example.main(java.lang.String[]) throws java.lang.NoSuchFieldException,java.lang.NoSuchMethodException
+
+    public void rigger.demo.Example.run() throws java.lang.NoSuchFieldException,java.lang.NoSuchMethodException
+
++---
+
+With the {{{./apidocs/index.html?rigger/agent/RiggerAgent.html}RiggerAgent}} enabled
+
+    src/main/example/config.xml:
+
++---
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<rig:JuryRigger xmlns:rig="...">
+    <rig:matches xmlns:xs="http://www.w3.org/2001/XMLSchema-instance" xs:type="nameMatcher">
+        <classMatch>rigger.demo.Example</classMatch>
+        <rigger xs:type="addAnnotation">
+            <finder>
+                <annotations>javax.xml.bind.annotation.XmlTransient</annotations>
+                <finder xs:type="fieldFinder">
+                    <fields>field</fields>
+                </finder>
+            </finder>
+            <finder>
+                <annotations>javax.xml.bind.annotation.XmlTransient</annotations>
+                <finder xs:type="methodFinder">
+                    <methods>run</methods>
+                </finder>
+            </finder>
+        </rigger>
+    </rig:matches>
+</rig:JuryRigger>
++---
+
+    The output:
+
++---
+    # maven-class-rigger-plugin> java -javaagent:target/maven-class-rigger-plugin-0.0.1-SNAPSHOT.jar=src/main/example/config.xml -classpath target/maven-class-rigger-plugin-0.0.1-SNAPSHOT.jar:target/deps/* rigger.demo.Example
+
+[RiggerAgent] Matched Class: rigger.demo.Example
+[RiggerAgent]    Matched Field: field
+[RiggerAgent]        Added Annotation: javax.xml.bind.annotation.XmlTransient
+[RiggerAgent]    Matched Method: run
+[RiggerAgent]        Added Annotation: javax.xml.bind.annotation.XmlTransient
+
+Annotations of the rigger.demo.Example class:
+
+Annotations on the rigger.demo.Example's Fields:
+    private java.lang.Object rigger.demo.Example.field
+        @javax.xml.bind.annotation.XmlTransient()
+
+
+Annotations on the rigger.demo.Example's Methods:
+    public static void rigger.demo.Example.main(java.lang.String[]) throws java.lang.NoSuchFieldException,java.lang.NoSuchMethodException
+
+    public void rigger.demo.Example.run() throws java.lang.NoSuchFieldException,java.lang.NoSuchMethodException
+        @javax.xml.bind.annotation.XmlTransient()
++---
