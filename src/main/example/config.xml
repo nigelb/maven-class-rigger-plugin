@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<rig:JuryRigger xmlns:rig="http://nigelb.github.com/maven-class-rigger-plugin/rigger-ml-1.0.xsd">
+    <rig:matches xmlns:xs="http://www.w3.org/2001/XMLSchema-instance" xs:type="nameMatcher">
+        <classMatch>rigger.demo.Example</classMatch>
+        <rigger xs:type="addAnnotation">
+            <finder>
+                <annotations>javax.xml.bind.annotation.XmlTransient</annotations>
+                <finder xs:type="fieldFinder">
+                    <fields>field</fields>
+                </finder>
+            </finder>
+            <finder>
+                <annotations>javax.xml.bind.annotation.XmlTransient</annotations>
+                <finder xs:type="methodFinder">
+                    <methods>run</methods>
+                </finder>
+            </finder>
+        </rigger>
+    </rig:matches>
+</rig:JuryRigger>
