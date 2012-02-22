@@ -21,24 +21,23 @@ Sample RiggerML File
 
 +-----
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<rig:JuryRigger xmlns:rig="http://nigelb.github.com/maven-class-rigger-plugin/rigger-ml-1.0.xsd"
-                xmlns:xs="http://www.w3.org/2001/XMLSchema-instance" >
-    <rig:matches xs:type="nameMatcher">
-        <rig:classMatch>org\.example\..*</rig:classMatch>
-        <rig:rigger xs:type="addAnnotation">
-            <rig:finder>
-                <rig:annotations>javax.xml.bind.annotation.XmlTransient</rig:annotations>
-                <rig:finder xs:type="fieldFinder">
-                    <rig:fields>field</rig:fields>
-                </rig:finder>
-            </rig:finder>
-            <rig:finder>
-                <rig:annotations>javax.xml.bind.annotation.XmlTransient</rig:annotations>
-                <rig:finder xs:type="methodFinder">
-                    <rig:methods>get.*</rig:methods>
-                </rig:finder>
-            </rig:finder>
-        </rig:rigger>
-    </rig:matches>
-</rig:JuryRigger>
+<JuryRigger xmlns:xs="http://www.w3.org/2001/XMLSchema-instance">
+    <matches xs:type="nameMatcher">
+        <classMatch>org\.example\..*</classMatch>
+        <rigger xs:type="addAnnotation">
+            <finder>
+                <annotations>javax.xml.bind.annotation.XmlTransient</annotations>
+                <finder xs:type="fieldFinder">
+                    <fields>field</fields>
+                </finder>
+            </finder>
+            <finder>
+                <annotations>javax.xml.bind.annotation.XmlTransient</annotations>
+                <finder xs:type="methodFinder">
+                    <methods>get.*</methods>
+                </finder>
+            </finder>
+        </rigger>
+    </matches>
+</JuryRigger>
 +-----

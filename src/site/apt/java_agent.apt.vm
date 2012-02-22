@@ -50,7 +50,7 @@ With the {{{./apidocs/index.html?rigger/agent/RiggerAgent.html}RiggerAgent}} ena
             <finder>
                 <annotations>javax.xml.bind.annotation.XmlTransient</annotations>
                 <finder xs:type="methodFinder">
-                    <methods>get.*</methods>
+                    <methods>run</methods>
                 </finder>
             </finder>
         </rigger>
