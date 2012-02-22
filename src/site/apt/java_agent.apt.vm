@@ -37,9 +37,9 @@ With the {{{./apidocs/index.html?rigger/agent/RiggerAgent.html}RiggerAgent}} ena
 
 +---
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<rig:JuryRigger xmlns:rig="...">
-    <rig:matches xmlns:xs="http://www.w3.org/2001/XMLSchema-instance" xs:type="nameMatcher">
-        <classMatch>rigger.demo.Example</classMatch>
+<JuryRigger xmlns:xs="http://www.w3.org/2001/XMLSchema-instance">
+    <matches xs:type="nameMatcher">
+        <classMatch>org\.example\..*</classMatch>
         <rigger xs:type="addAnnotation">
             <finder>
                 <annotations>javax.xml.bind.annotation.XmlTransient</annotations>
@@ -50,12 +50,12 @@ With the {{{./apidocs/index.html?rigger/agent/RiggerAgent.html}RiggerAgent}} ena
             <finder>
                 <annotations>javax.xml.bind.annotation.XmlTransient</annotations>
                 <finder xs:type="methodFinder">
-                    <methods>run</methods>
+                    <methods>get.*</methods>
                 </finder>
             </finder>
         </rigger>
-    </rig:matches>
-</rig:JuryRigger>
+    </matches>
+</JuryRigger>
 +---
 
     The output:

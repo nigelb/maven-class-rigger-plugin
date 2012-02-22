@@ -34,11 +34,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 @XmlType(propOrder = {"matches"})
-@XmlRootElement(name = "JuryRigger", namespace = "http://nigelb.github.com/maven-class-rigger-plugin/rigger-ml-1.0.xsd")
+@XmlRootElement(name = "JuryRigger")//, namespace = "http://nigelb.github.com/maven-class-rigger-plugin/rigger-ml-1.0.xsd")
 public class RiggerML {
     private List<Match> matches = new ArrayList<Match>();
 
-    @XmlElement(namespace = "http://nigelb.github.com/maven-class-rigger-plugin/rigger-ml-1.0.xsd")
+    @XmlElement//(namespace = "http://nigelb.github.com/maven-class-rigger-plugin/rigger-ml-1.0.xsd")
     public List<Match> getMatches() {
         return matches;
     }
@@ -84,6 +84,11 @@ public class RiggerML {
         ma.getAnnotations().add(javax.xml.bind.annotation.XmlTransient.class.getCanonicalName());
 
         mar.setProperty("com.sun.xml.bind.namespacePrefixMapper", new NamespacePrefixMapper(){
+            @Override
+            public String[] getPreDeclaredNamespaceUris() {
+                return new String[]{"http://www.w3.org/2001/XMLSchema-instance"};
+            }
+
             @Override
             public String getPreferredPrefix(String s, String s1, boolean b) {
                 if(s.equals("http://www.w3.org/2001/XMLSchema-instance"))
