@@ -27,11 +27,15 @@ import org.apache.maven.plugin.logging.Log;
 import rigger.bce.FieldFinder;
 import rigger.bce.MethodFinder;
 import rigger.bce.RiggerML;
+import rigger.extend.ContextCreator;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
-import java.io.*;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.FilenameFilter;
+import java.io.IOException;
 
 /**
  * Jury rig java classfiles with the Apache bcel library.
@@ -45,11 +49,21 @@ public class RiggerMojo extends AbstractMojo {
     private Unmarshaller um;
     private RiggerML ref;
     private Log logger = getLog();
+    private rigger.Log ml = new rigger.Log("maven-class-rigger-plugin", null) {
+        public void info(String message) {
+            logger.info(message);
+        }
+
+        public void error(String message) {
+            logger.error(message);
+        }
+    };
 
     public RiggerMojo() throws MojoExecutionException {
         super();
         try {
-            context = JAXBContext.newInstance(RiggerML.class, FieldFinder.class, MethodFinder.class);
+//            context = JAXBContext.newInstance(RiggerML.class, FieldFinder.class, MethodFinder.class);
+            context = new ContextCreator(ml).createContext();
             um = context.createUnmarshaller();
         } catch (JAXBException e) {
             throw new MojoExecutionException("Could not create JAXB Unmarshaller", e);
@@ -95,11 +109,7 @@ public class RiggerMojo extends AbstractMojo {
                         ClassParser cp = new ClassParser(current.getPath());
                         JavaClass jc = cp.parse();
                         ClassGen cg = new ClassGen(jc);
-                        if (ref.process(cg, jc, new rigger.Log() {
-                            public void info(String message) {
-                                logger.info(message);
-                            }
-                        })) {
+                        if (ref.process(cg, jc, ml)) {
                             FileOutputStream fos = new FileOutputStream(current);
                             fos.write(cg.getJavaClass().getBytes());
                             fos.close();

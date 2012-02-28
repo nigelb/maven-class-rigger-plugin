@@ -25,8 +25,10 @@ import org.apache.bcel.generic.ClassGen;
 import rigger.Log;
 import rigger.bce.RiggerML;
 
+import javax.swing.plaf.basic.BasicInternalFrameTitlePane;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -35,6 +37,7 @@ import java.lang.instrument.ClassFileTransformer;
 import java.lang.instrument.IllegalClassFormatException;
 import java.lang.instrument.Instrumentation;
 import java.security.ProtectionDomain;
+import java.util.logging.Logger;
 
 public class RiggerAgent implements ClassFileTransformer {
 
@@ -47,7 +50,7 @@ public class RiggerAgent implements ClassFileTransformer {
     public RiggerAgent(String className, Instrumentation i) throws JAXBException {
         this.className = className;
         this.i = i;
-        context = JAXBContext.newInstance(RiggerML.class);
+        context = JAXBContext.newInstance("rigger.bce");
         um = context.createUnmarshaller();
         ref = (RiggerML) um.unmarshal(new File(className));
     }
@@ -60,14 +63,19 @@ public class RiggerAgent implements ClassFileTransformer {
                             className + ".java");
             JavaClass jc = cp.parse();
             ClassGen cg = new ClassGen(jc);
-            ref.process(cg, jc, new Log() {
+            ref.process(cg, jc, new Log("RiggerAgent", null) {
                 public void info(String message) {
-                    System.out.printf("[RiggerAgent] %s%n", message);
+                    System.out.printf("[RiggerAgent       ] %s%n", message);
+                }
+
+                public void error(String message) {
+                    System.out.printf("[RiggerAgent ERROR ] %s%n", message);
                 }
             });
             return cg.getJavaClass().getBytes();
         } catch (IOException e) {
-
+            System.out.println(e);
+            e.printStackTrace();
         }
         return classfileBuffer;
     }
