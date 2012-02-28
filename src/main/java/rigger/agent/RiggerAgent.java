@@ -63,7 +63,7 @@ public class RiggerAgent implements ClassFileTransformer {
                             className + ".java");
             JavaClass jc = cp.parse();
             ClassGen cg = new ClassGen(jc);
-            ref.process(cg, jc, new Log("RiggerAgent", null) {
+            ref.process(cg, jc, new Log() {
                 public void info(String message) {
                     System.out.printf("[RiggerAgent       ] %s%n", message);
                 }

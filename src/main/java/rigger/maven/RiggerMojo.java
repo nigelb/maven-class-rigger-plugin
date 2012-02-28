@@ -49,7 +49,7 @@ public class RiggerMojo extends AbstractMojo {
     private Unmarshaller um;
     private RiggerML ref;
     private Log logger = getLog();
-    private rigger.Log ml = new rigger.Log("maven-class-rigger-plugin", null) {
+    private rigger.Log ml = new rigger.Log() {
         public void info(String message) {
             logger.info(message);
         }

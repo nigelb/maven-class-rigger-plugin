@@ -21,17 +21,13 @@ package rigger;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public abstract class Log extends Logger {
+public abstract class Log{
      public static final Level ERROR = Level.SEVERE;
-
-    protected Log(String name, String resourceBundleName) {
-        super(name, resourceBundleName);
-    }
 
     public abstract void info(String message);
 
-    public  void error(String message)
-    {
-        log(ERROR, message);
-    }
+    public  abstract void error(String message);
+//    {
+//        log(ERROR, message);
+//    }
 }
