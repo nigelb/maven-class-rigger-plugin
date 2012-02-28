@@ -34,7 +34,7 @@ import javax.xml.bind.Unmarshaller;
 import java.io.*;
 
 /**
- * Goal which allows one to match the compiled java classfiles with bcel.
+ * Jury rig java classfiles with the Apache bcel library.
  *
  * @goal jury-rig
  * @phase compile
