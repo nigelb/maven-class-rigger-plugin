@@ -185,11 +185,23 @@
                     </execution>
 
                     <execution>
-                        <id>site_schema</id>
+                        <id>generate_resources</id>
                         <phase>generate-resources</phase>
                         <configuration>
                             <tasks>
                                 <copy file="${schemagen}" tofile="${site.schema}"/>
+
+                                <fileset id="jaxb.index.java" dir="${build.sourceDirectory}">
+                                    <include name="rigger/bce/*.java"/>
+                                </fileset>
+                                <pathconvert property="jaxb.index" refid="jaxb.index.java" pathsep="${line.separator}">
+                                    <chainedmapper>
+                                        <flattenmapper/>
+                                        <globmapper from="*.java" to="*" casesensitive="false"/>
+                                    </chainedmapper>
+                                </pathconvert>
+                                <mkdir dir="${build.outputDirectory}/rigger/bce/"/>
+                                <echo file="${build.outputDirectory}/rigger/bce/jaxb.index" message="${jaxb.index}"/>
                             </tasks>
                         </configuration>
                         <goals>
