@@ -13,9 +13,9 @@ Usage [See Usage](http://nigelb.github.com/maven-class-rigger-plugin/usage.html)
             <build>
                 <plugins>
                     <plugin>
-                        <groupId>${project.groupId}</groupId>
-                        <artifactId>${project.artifactId}</artifactId>
-                        <version>${project.version}</version>
+                        <groupId>maven-class-rigger-plugin</groupId>
+                        <artifactId>maven-class-rigger-plugin</artifactId>
+                        <version>0.0.1-SNAPSHOT</version>
                         <executions>
                             <execution>
                                 <phase>compile</phase>
