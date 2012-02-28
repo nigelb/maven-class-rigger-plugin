@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<rig:JuryRigger xmlns:rig="http://nigelb.github.com/maven-class-rigger-plugin/rigger-ml-1.0.xsd">
-    <rig:matches xmlns:xs="http://www.w3.org/2001/XMLSchema-instance" xs:type="nameMatcher">
+<JuryRigger xmlns:xs="http://www.w3.org/2001/XMLSchema-instance">
+    <matches xs:type="nameMatcher">
         <classMatch>rigger.demo.Example</classMatch>
         <rigger xs:type="addAnnotation">
             <finder>
@@ -16,5 +16,5 @@
                 </finder>
             </finder>
         </rigger>
-    </rig:matches>
-</rig:JuryRigger>
+    </matches>
+</JuryRigger>
